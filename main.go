@@ -15,7 +15,7 @@ func main() {
 	r.GET("/rand", rspRand)
 
 	r.LoadHTMLGlob("templates/*")
-	r.GET("/index", rspHtml)
+	r.GET("/", rspHome)
 
 	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
 }
