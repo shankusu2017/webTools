@@ -10,7 +10,12 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	r := gin.Default()
+
 	r.GET("/ip", rspIP)
 	r.GET("/rand", rspRand)
-	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
+
+	r.LoadHTMLGlob("templates/*")
+	r.GET("/index", rspHtml)
+
+	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
 }
