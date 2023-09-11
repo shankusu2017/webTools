@@ -5,6 +5,11 @@ import (
 	"net/http"
 )
 
+type statement struct {
+	text   string `json:"text"`
+	weight int    `json:"weight"`
+}
+
 func rspHome(c *gin.Context) {
 	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
