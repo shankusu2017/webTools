@@ -4,6 +4,7 @@ import (
 	_ "crypto/rand"
 	"github.com/gin-gonic/gin"
 	"math/rand"
+	"strconv"
 	"strings"
 )
 
@@ -23,8 +24,19 @@ func randomString(n int) string {
 	return sb.String()
 }
 
+// http://localhost:8081/rand?len=16
 func rspRand(c *gin.Context) {
+	lenArg := c.Query("len")
+	lenHex := 8
+	if len(lenArg) > 0 {
+		lenInt, err := strconv.Atoi(lenArg)
+		if err == nil {
+			if lenInt > 0 {
+				lenHex = lenInt
+			}
+		}
+	}
 	c.JSON(200, gin.H{
-		"rand": randomString(8),
+		"rand": string("0x") + randomString(lenHex),
 	})
 }
