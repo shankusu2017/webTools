@@ -6,6 +6,7 @@ import (
 	pb "google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"log"
+	"net/http"
 )
 
 func repeaterServerListGet(c *gin.Context) {
@@ -34,7 +35,7 @@ func repeaterServerListGet(c *gin.Context) {
 
 	// TODO
 	var rsp proto.RepeaterServerInfoRsp
-	c.ProtoBuf(501, &rsp)
+	c.ProtoBuf(http.StatusNotImplemented, &rsp)
 
 	// 解析 域名
 	// ping 一下看看是否存活
