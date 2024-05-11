@@ -10,6 +10,7 @@ import (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
+	InitNodeMgr()
 
 	r := gin.Default()
 
@@ -20,11 +21,10 @@ func main() {
 	r.GET("/", rspHome)
 
 	r.GET("/img", rspImg)
-	r.POST("/v1/monitor/post", monitorPost)
 	r.GET("/v1/monitor", monitorGet)
 
-	r.GET(fmt.Sprintf("%s", url.URL_REPEATER_SERVER))
-	r.POST(fmt.Sprintf("%s", url.URL_EVENT_POST))
+	r.GET(fmt.Sprintf("%s", url.URL_REPEATER_SERVER), repeaterServerGet)
+	r.POST(fmt.Sprintf("%s", url.URL_EVENT_POST), eventPost)
 
 	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
 }

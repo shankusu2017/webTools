@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	proto "github.com/shankusu2017/proto_pb/go/proto"
 	pb "google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"log"
-	"net/http"
 )
 
 func eventPost(c *gin.Context) {
@@ -18,24 +18,35 @@ func eventPost(c *gin.Context) {
 		return
 	}
 
-	var req proto.EventPost
-	err = pb.Unmarshal(bodyBytes, &req)
+	var msg proto.MsgEventPost
+	err = pb.Unmarshal(bodyBytes, &msg)
 	if err != nil {
 		log.Printf("0x4842fc43 Invalid request body(%v), ip:%s", bodyBytes, ip)
 		return
 	}
 
-	machine := req.GetId()
+	buf, _ := json.Marshal(msg)
+	log.Printf("0x09d8bb7d recv a event:[%s], cli:%s", string(buf), ip)
+
+	machine := msg.GetMachine()
 	if machine == nil {
-		log.Printf("0x630d0dedclient(ip:%s) req repeater server list, machine.id is nil", ip)
+		log.Printf("0x630d0ded client(ip:%s) req repeater server list, machine.id is nil", ip)
 		return
 	} else {
 		log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 	}
 
-	// TODO
-	var rsp proto.RepeaterServerInfoRsp
-	c.ProtoBuf(http.StatusNotImplemented, &rsp)
+	event := msg.GetEvent()
+	if event == proto.Event_STARTED ||
+		event == proto.Event_KEEPALIVE {
+		nodeEvent(c, &msg)
+	} else {
+		log.Printf("0x1ae4262b recv invalid event(%s)", event)
+		return
+	}
+
+	//var rsp proto.RepeaterServerInfoRsp
+	//c.ProtoBuf(http.StatusNotImplemented, &rsp)
 
 	// 解析 域名
 	// ping 一下看看是否存活
