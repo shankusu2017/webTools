@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shankusu2017/url"
 	"math/rand"
 	"time"
 )
@@ -18,11 +20,11 @@ func main() {
 	r.GET("/", rspHome)
 
 	r.GET("/img", rspImg)
-	r.POST("/monitor/post", monitorPost)
-	r.GET("/monitor", monitorGet)
+	r.POST("/v1/monitor/post", monitorPost)
+	r.GET("/v1/monitor", monitorGet)
 
-	r.GET("/vpn/v1/repeaterServerList", repeaterServerListGet)
-	r.POST("/event/v1/post", eventPost)
+	r.GET(fmt.Sprintf("%s", url.URL_REPEATER_SERVER))
+	r.POST(fmt.Sprintf("%s", url.URL_EVENT_POST))
 
 	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
 }
