@@ -22,6 +22,7 @@ func main() {
 	r.GET("/monitor", monitorGet)
 
 	r.GET("/vpn/v1/repeaterServerList", repeaterServerListGet)
+	r.POST("/event/v1/post", eventPost)
 
 	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
 }
