@@ -88,7 +88,7 @@ func (mgr *nodeMgrT) loopScan() {
 
 		mgr.dataMtx.Lock()
 		for key, node := range mgr.nodeMap {
-			if node.Ping.Before(now.Add(time.Second * -7)) {
+			if node.Ping.Before(now.Add(time.Second * -30)) {
 				log.Printf("LOG 0x71bec216 node(%s) too old, delete it", key)
 				delete(mgr.nodeMap, key)
 			}
