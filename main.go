@@ -23,7 +23,7 @@ func main() {
 	r.GET("/img", rspImg)
 	r.GET("/v1/monitor", monitorGet)
 
-	r.GET(fmt.Sprintf("%s", url.URL_REPEATER_SERVER), repeaterNodeGet)
+	r.POST(fmt.Sprintf("%s", url.URL_REPEATER_SERVER), repeaterNodeGet)
 	r.POST(fmt.Sprintf("%s", url.URL_EVENT_POST), eventPost)
 
 	r.Run(":80") // 监听并在 0.0.0.0:80 上启动服务
