@@ -35,7 +35,6 @@ func eventPost(c *gin.Context) {
 		log.Printf("0x630d0ded client(ip:%s) req repeater server list, machine.id is nil", ip)
 		return
 	}
-	log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 
 	event := msg.GetEvent()
 	if event == proto.Event_STARTED ||
