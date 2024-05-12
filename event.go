@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	proto "github.com/shankusu2017/proto_pb/go/proto"
+	"github.com/shankusu2017/proto_pb/go/proto"
 	pb "google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"log"
@@ -25,16 +25,17 @@ func eventPost(c *gin.Context) {
 		return
 	}
 
-	buf, _ := json.Marshal(msg)
-	log.Printf("0x09d8bb7d recv a event:[%s], cli:%s", string(buf), ip)
+	{
+		jBuf, _ := json.Marshal(msg)
+		log.Printf("0x09d8bb7d recv a event:[%s], cli:%s", string(jBuf), ip)
+	}
 
 	machine := msg.GetMachine()
 	if machine == nil {
 		log.Printf("0x630d0ded client(ip:%s) req repeater server list, machine.id is nil", ip)
 		return
-	} else {
-		log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 	}
+	log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 
 	event := msg.GetEvent()
 	if event == proto.Event_STARTED ||
@@ -44,12 +45,4 @@ func eventPost(c *gin.Context) {
 		log.Printf("0x1ae4262b recv invalid event(%s)", event)
 		return
 	}
-
-	//var rsp proto.RepeaterServerInfoRsp
-	//c.ProtoBuf(http.StatusNotImplemented, &rsp)
-
-	// 解析 域名
-	// ping 一下看看是否存活
-	// 存档上述信息
-	// 返回存活的server
 }

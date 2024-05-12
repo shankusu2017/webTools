@@ -14,9 +14,9 @@ import (
 
 type NodeT struct {
 	IP   string    `json:"ip,omitempty"`
-	Role string    `json:"ip,omitempty"`
-	Ver  string    `json:"ip,omitempty"`
-	Ping time.Time `json:"ip,omitempty"` // 最后一次 ping 的时间
+	Role string    `json:"role,omitempty"`
+	Ver  string    `json:"ver,omitempty"`
+	Ping time.Time `json:"ping,omitempty"` // 最后一次 ping 的时间
 }
 
 type nodeMgrT struct {
@@ -54,7 +54,7 @@ func (mgr *nodeMgrT) updateNode(ip string) {
 	node.Ping = time.Now()
 }
 
-func (mgr *nodeMgrT) getNode(role string) []string {
+func (mgr *nodeMgrT) getNodeIPByRole(role string) []string {
 	mgr.dataMtx.Lock()
 	defer mgr.dataMtx.Unlock()
 
@@ -108,7 +108,7 @@ func nodeEvent(c *gin.Context, msg *proto.MsgEventPost) {
 			return
 		}
 		node.Role = mNode.GetRole()
-		if node.Role != constant.ROLE_REPEATER && node.Role != constant.ROLE_PAC {
+		if node.Role != constant.ROLE_PAC && node.Role != constant.ROLE_REPEATER {
 			log.Printf("ERROR 0x5454cb42 role invalid:%s", node.Role)
 			return
 		}
@@ -120,7 +120,7 @@ func nodeEvent(c *gin.Context, msg *proto.MsgEventPost) {
 	}
 }
 
-func repeaterServerGet(c *gin.Context) {
+func repeaterNodeGet(c *gin.Context) {
 	ip := c.RemoteIP()
 
 	bodyBytes, err := ioutil.ReadAll(c.Request.Body)
@@ -140,13 +140,12 @@ func repeaterServerGet(c *gin.Context) {
 	if machine == nil {
 		log.Printf("0x630d0ded client(ip:%s) req repeater server list, machine.id is nil", ip)
 		return
-	} else {
-		log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 	}
+	log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
 
 	var rsp proto.MsgRepeaterServerInfoRsp
 
-	ipLst := nodeMgr.getNode(constant.ROLE_REPEATER)
+	ipLst := nodeMgr.getNodeIPByRole(constant.ROLE_REPEATER)
 	for _, iP := range ipLst {
 		node := &proto.RepeaterServerNode{IPv4: iP}
 		rsp.Servers = append(rsp.Servers, node)
