@@ -141,7 +141,7 @@ func repeaterNodeGet(c *gin.Context) {
 		log.Printf("0x630d0ded client(ip:%s) req repeater server list, machine.id is nil", ip)
 		return
 	}
-	log.Printf("client(ip:%s, id:%s) req repeater server list", ip, machine.GetUUID())
+	log.Printf("0x2e6b9922 req repeater server list client(ip:%s, id:%s)", ip, machine.GetUUID())
 
 	var rsp proto.MsgRepeaterServerInfoRsp
 

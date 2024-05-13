@@ -1,10 +1,13 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 func rspIP(c *gin.Context) {
 	ip := c.RemoteIP()
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"ip": ip,
 	})
 }
