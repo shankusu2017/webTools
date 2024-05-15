@@ -4,10 +4,10 @@ go 1.21.0
 
 require (
 	github.com/gin-gonic/gin v1.10.0
-	github.com/shankusu2017/constant v0.0.0-20240511153819-3076279f446f
+	github.com/shankusu2017/constant v0.0.0-20240514114055-1c970a2b30c1
 	github.com/shankusu2017/proto_pb v0.0.0-20240511160259-59e15ec138f4
 	github.com/shankusu2017/url v0.0.0-20240511070306-aaa1189ccfed
-	github.com/shankusu2017/utils v0.0.0-20240511084716-8d9852ab02b2
+	github.com/shankusu2017/utils v0.0.0-20240515021858-84c11d0d5fa7
 	google.golang.org/protobuf v1.34.1
 )
 
@@ -24,6 +24,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.20.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/google/gopacket v1.1.19 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect

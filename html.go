@@ -25,7 +25,7 @@ var (
 )
 
 func refreshText() error {
-	path := "cfg/text.json"
+	path := "etc/text.json"
 	f, err := os.Stat(path)
 	if err != nil {
 		log.Fatalf("FATAL 3483c387 %s", err.Error())
