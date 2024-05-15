@@ -16,6 +16,7 @@ type NodeT struct {
 	IP   string    `json:"ip,omitempty"`
 	Role string    `json:"role,omitempty"`
 	Ver  string    `json:"ver,omitempty"`
+	Uuid string    `json:"uuid,omitempty"`
 	Ping time.Time `json:"ping,omitempty"` // 最后一次 ping 的时间
 }
 
@@ -113,6 +114,11 @@ func nodeEvent(c *gin.Context, msg *proto.MsgEventPost) {
 			return
 		}
 		node.Ver = mNode.GetVer()
+
+		mMachine := msg.GetMachine()
+		if mMachine != nil {
+			node.Uuid = mMachine.GetUUID()
+		}
 
 		nodeMgr.addNode(node)
 	} else if msg.GetEvent() == proto.Event_KEEPALIVE {
