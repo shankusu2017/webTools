@@ -38,6 +38,7 @@ func rspRand(c *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"rand": string("0x") + randomString(lenHex),
+		"rand":        string("0x") + randomString(lenHex),
+		"randCapital": strings.ToUpper(string("0x") + randomString(lenHex)),
 	})
 }
